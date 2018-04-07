@@ -5,19 +5,32 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os/exec"
+	"os"
+	"bytes"
 	"strings"
 	"sync"
+	"encoding/gob"
+	"time"
 	
 	"github.com/labstack/echo"
 )
 
-type post_data struct {
-	Lang       string
-	FileData   string
-	FileName   string
-	Input 	   string
+
+type log_write_data struct {
+	Content string
+	FileName string
 	ComCommand string
 	ExeCommand string
+}
+
+type post_data struct {
+	Lang       string  `json:"lang"`
+	FileData   string  `json:"fdata"`
+	FileName   string  `json:"fname"`
+	Input 	   string  `json:"input"`
+	Extension  string  `json:"ext"`
+	ComCommand string  `json:"ccommand"`
+	ExeCommand string  `json:"ecommand"`
 }
 
 type response_data struct {
@@ -49,19 +62,39 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	e.POST("/exe",func(c echo.Context) error{
+	e.GET("/execute",func(c echo.Context) error{
+		return c.String(http.StatusOK,"POST Only Link")
+	})
+
+	e.POST("/execute",func(c echo.Context) error{
+		var buff bytes.Buffer 
+		enc := gob.NewEncoder(&buff) 
 		d := new(post_data)
+		err1 := enc.Encode(d)
+		if err1 != nil {
+			return err1;
+		}
+
 		if err := c.Bind(d); err != nil {
 			return err
 		}
 		data := []byte(d.FileData)
-		err := ioutil.WriteFile("./" + d.FileName, data, 0644)
+		err := ioutil.WriteFile("./" + d.FileName + d.Extension, data, 0644)
 		if err != nil {
 			panic(err)
 		}
+		
 		wg := new(sync.WaitGroup)
 		wg.Add(2)
 		compile := exe_cmd(d.ComCommand, wg)
+
+		t := time.Now().UTC()
+		timeStamp := t.Format("20060102150405")
+		os.Mkdir("./log/" + timeStamp,0644)
+		err2 := ioutil.WriteFile("./log/" + timeStamp +  "/" + "source_" +  d.FileName + d.Extension ,data,0644 )
+		if err2 != nil {
+			panic(err2)
+		}
 		execute := exe_cmd(d.ExeCommand, wg)
 
 		wg.Wait()
