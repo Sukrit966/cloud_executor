@@ -59,7 +59,11 @@ func exe_cmd(cmd string, wg *sync.WaitGroup) string {
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		return c.File("./public/index.html")
+	})
+
+	e.GET("/main.js",func(c echo.Context) error {
+		return c.File("./public/main.js")
 	})
 
 	e.GET("/execute",func(c echo.Context) error{
@@ -83,7 +87,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		
+
 		wg := new(sync.WaitGroup)
 		wg.Add(2)
 		compile := exe_cmd(d.ComCommand, wg)
