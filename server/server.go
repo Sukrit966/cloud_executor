@@ -31,6 +31,11 @@ type response_data struct {
 	Output string `json:"output"`
 }
 
+type version_response struct {
+	Version string `json:"version"`
+	CPU_ID  string `json:"CPU_ID"`
+}
+
 func exe_cmd(cmd string, wg *sync.WaitGroup) string {
 	fmt.Println("command is ", cmd)
 	parts := strings.Fields(cmd)
@@ -56,7 +61,8 @@ func JsFile(c echo.Context) error {
 }
 
 func Ping(c echo.Context) error {
-	return c.String(http.StatusOK, "VERSION 1.0")
+	vr := &version_response{Version: "0.1", CPU_ID: "x86"}
+	return c.JSON(http.StatusOK, vr)
 }
 
 func GetExectue(c echo.Context) error {
