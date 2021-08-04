@@ -36,6 +36,10 @@ type version_response struct {
 	CPU_ID  string `json:"CPU_ID"`
 }
 
+type error_response struct {
+	Error string `json:"error"`
+}
+
 func exe_cmd(cmd string, wg *sync.WaitGroup) string {
 	fmt.Println("command is ", cmd)
 	parts := strings.Fields(cmd)
@@ -75,11 +79,13 @@ func Execute(c echo.Context) error {
 	d := new(post_data)
 	err1 := enc.Encode(d)
 	if err1 != nil {
-		return err1
+		e := &error_response{Error: err1.Error()}
+		return c.JSON(http.StatusOK, e)
 	}
 
 	if err := c.Bind(d); err != nil {
-		return err
+		e := &error_response{Error: err.Error()}
+		return c.JSON(http.StatusOK, e)
 	}
 	data := []byte(d.FileData)
 	err := ioutil.WriteFile("./"+d.FileName+d.Extension, data, 0644)
