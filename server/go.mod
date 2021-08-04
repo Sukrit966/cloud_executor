@@ -1,4 +1,4 @@
-module github.com/sukrit966/cloud-executor/server
+module github.com/sukrit966/cloud_executor/server
 
 go 1.16
 

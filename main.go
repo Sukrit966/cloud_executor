@@ -2,8 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo"
-	"github.com/sukrit966/cloud-executer/server"
-	"github.com/sukrit966/cloud-executor/server"
+	"github.com/sukrit966/cloud_executor/server"
 )
 
 type log_write_data struct {
