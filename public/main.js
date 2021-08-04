@@ -49,7 +49,14 @@ $(document).ready(function() {
         $.ajax(settings).done(function (response) {
           var error = response.error;
           var output = response.output;
-          dialog.querySelector('.content').innerHTML = output;
+          if(output === undefined){
+            console.log("No output");
+            dialog.querySelector('.content').innerHTML = error;
+
+          }else{
+            dialog.querySelector('.content').innerHTML = output;
+
+          }
           dialog.showModal();
         });
     })

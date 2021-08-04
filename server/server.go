@@ -90,7 +90,8 @@ func Execute(c echo.Context) error {
 	data := []byte(d.FileData)
 	err := ioutil.WriteFile("./"+d.FileName+d.Extension, data, 0644)
 	if err != nil {
-		panic(err)
+		e := &error_response{Error: err.Error()}
+		return c.JSON(http.StatusOK, e)
 	}
 
 	wg := new(sync.WaitGroup)
@@ -102,7 +103,8 @@ func Execute(c echo.Context) error {
 	os.Mkdir("./log/"+timeStamp, 0644)
 	err2 := ioutil.WriteFile("./log/"+timeStamp+"/"+"source_"+d.FileName+d.Extension, data, 0644)
 	if err2 != nil {
-		panic(err2)
+		e := &error_response{Error: err2.Error()}
+		return c.JSON(http.StatusOK, e)
 	}
 	execute := exe_cmd(d.ExeCommand, wg)
 

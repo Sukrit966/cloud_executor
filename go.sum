@@ -22,6 +22,8 @@ github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81P
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/sukrit966/cloud_executor/server v0.0.0-20210804114906-1cd1bf8c75d0 h1:AYS5s+v4ltvYryysCDtNYKLJwEp20xc1e7KikGwQZn4=
 github.com/sukrit966/cloud_executor/server v0.0.0-20210804114906-1cd1bf8c75d0/go.mod h1:gCnf0KwZCciKq8B8Cjys3ppHHFYtj4HnCBLpb5je1no=
+github.com/sukrit966/cloud_executor/server v0.0.0-20210804135149-e000bcd8e393 h1:/0TaDvXlxalx6oDIZRdqHNFeY2FVlf2Oj2Jh0lkUkq8=
+github.com/sukrit966/cloud_executor/server v0.0.0-20210804135149-e000bcd8e393/go.mod h1:gCnf0KwZCciKq8B8Cjys3ppHHFYtj4HnCBLpb5je1no=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
 github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
 github.com/valyala/fasttemplate v1.0.1 h1:tY9CJiPnMXf1ERmG2EyK7gNUd+c6RKGD0IfU8WdUSz8=
