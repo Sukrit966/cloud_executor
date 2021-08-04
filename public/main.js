@@ -26,9 +26,10 @@ $(document).ready(function() {
 	        "fname": time ,
 	        "input":"",
 	        "ext":".cpp",
+          // Temporary windows workaround
 	        //"ccommand":"g++ -o /work/cloud_executer/files/" + time + ".out  ./work/cloud_executer/files/" +  + time  + ".cpp",
-		"ccommand":"g++  " + time + ".cpp",
-		"ecommand":"./a.out"	       
+		      "ccommand":"g++  " + time + ".cpp",
+		      "ecommand":"./a.exe"	       
 // "ecommand":"./work/cloud_executer/files/" +time + ".out" 
         }
         console.log(JSON.stringify(packageData))

@@ -88,7 +88,8 @@ func Execute(c echo.Context) error {
 		return c.JSON(http.StatusOK, e)
 	}
 	data := []byte(d.FileData)
-	err := ioutil.WriteFile("./"+d.FileName+d.Extension, data, 0644)
+	fileName := "./" + d.FileName + d.Extension
+	err := ioutil.WriteFile(fileName, data, 0644)
 	if err != nil {
 		e := &error_response{Error: err.Error()}
 		return c.JSON(http.StatusOK, e)
@@ -101,7 +102,8 @@ func Execute(c echo.Context) error {
 	t := time.Now().UTC()
 	timeStamp := t.Format("20060102150405")
 	os.Mkdir("./log/"+timeStamp, 0644)
-	err2 := ioutil.WriteFile("./log/"+timeStamp+"/"+"source_"+d.FileName+d.Extension, data, 0644)
+	logPath := "./log/" + timeStamp + "/" + "source_"
+	err2 := ioutil.WriteFile(logPath+d.FileName+d.Extension, data, 0644)
 	if err2 != nil {
 		e := &error_response{Error: err2.Error()}
 		return c.JSON(http.StatusOK, e)
@@ -109,6 +111,18 @@ func Execute(c echo.Context) error {
 	execute := exe_cmd(d.ExeCommand, wg)
 
 	wg.Wait()
+	err3 := ioutil.WriteFile(logPath+d.FileName+"_output.txt", []byte(execute), 0644)
+	if err3 != nil {
+		return c.String(http.StatusOK, "LOL")
+	}
+	err4 := os.Remove(fileName)
+	if err4 != nil {
+		fmt.Println(err4)
+	}
+	err4 = os.Remove("./a.exe")
+	if err4 != nil {
+		fmt.Println(err4)
+	}
 	out := &response_data{Error: compile, Output: execute}
 
 	return c.JSON(http.StatusOK, out)
