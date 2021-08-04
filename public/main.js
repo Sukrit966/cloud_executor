@@ -37,7 +37,7 @@ $(document).ready(function() {
         }
         var settings = {
           "async": true,
-          "url":"http://167.99.203.49:8080/execute",
+          "url":"http://localhost:8080/execute",
           "method": "POST",
           "headers": {
               "content-type": "application/json"
